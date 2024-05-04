@@ -78,8 +78,8 @@ class SwitchVoicePlugin(CommandOperator):
 
 
 # 注册插件
-@register(name="miHoYoVoice", description="一个生成原神/星铁语音的插件", version="1.0", author="the-lazy-me")
-class miHoYoVoicePlugin(BasePlugin):
+@register(name="miHoYoVoice", description="一个生成原神/星铁语音的插件", version="1.1", author="the-lazy-me")
+class VoicePlugin(BasePlugin):
     # 插件加载时触发
     def __init__(self, host: APIHost):
         pass
@@ -87,6 +87,11 @@ class miHoYoVoicePlugin(BasePlugin):
     # 当消息回复时触发
     @handler(NormalMessageResponded)
     async def text_to_voice(self, ctx: EventContext):
+        # 清空同目录的audio_temp文件夹下的所有文件
+        base_path = os.path.abspath(os.path.join(os.path.dirname(__file__), "audio_temp"))
+        if os.path.exists(base_path):
+            for file in os.listdir(base_path):
+                os.remove(os.path.join(base_path, file))
         global ifVoice
         global character
         # 如果语音开关开启
@@ -103,7 +108,7 @@ class miHoYoVoicePlugin(BasePlugin):
                     character_id = character_item['id']
                     break
 
-            self.ap.logger.info(f"使用角色“{character}”生成回复语音，内容为：{res_text}")
+            self.ap.logger.info(f"使用角色“{character}”生成回复语音")
             # 生成语音
             result = generate_audio(res_text, character_id)
 
@@ -112,7 +117,7 @@ class miHoYoVoicePlugin(BasePlugin):
                 ctx.add_return("reply", [Voice(path=str(result))])
 
                 # 删除生成的silk语音文件
-                os.remove(result)
+                # os.remove(result)
 
         # 插件加载时触发
 

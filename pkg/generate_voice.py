@@ -12,17 +12,20 @@ base_path = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
 with open(os.path.join(base_path, 'config/config.yml'), 'r', encoding='utf-8') as f:
     config = yaml.safe_load(f)
 
-token = config['token'][0]
+# token = config['token'][0]
 
-if token == "":
+if len(config['token']) == 0:
     print("请填写token")
     exit(1)
+else:
+    token_list = config['token']
 
+print(token_list)
 
 def get_character_list():
     global base_path
 
-    url = "https://u95167-bd74-2aef8085.westx.seetacloud.com:8443/flashsummary/voices?language=zh-CN&tag_id=1"
+    url = "https://api.ttson.cn:50602/flashsummary/voices?language=zh-CN&tag_id=1"
 
     payload = ""
     headers = {
@@ -47,6 +50,15 @@ def get_character_list():
 
 
 def get_audio_url(text: str, voice_id: str):
+    global token_list
+
+    # 如果有多个token，轮询使用
+    if len(token_list) > 1:
+        token = token_list.pop(0)
+        token_list.append(token)
+    else:
+        token = token_list[0]
+
     url = "https://u95167-bd74-2aef8085.westx.seetacloud.com:8443/flashsummary/tts?token=" + token
 
     language = "ZH"
@@ -57,16 +69,11 @@ def get_audio_url(text: str, voice_id: str):
         if '\u4e00' <= char <= '\u9fff':
             language = "auto"
             break
-    # 检测text是否只有英文
-    for char in text:
-        if '\u4e00' <= char <= '\u9fff':
-            language = "EN"
-            break
 
     payload = json.dumps({
         "voice_id": voice_id,
         "text": text,
-        "format": "wav",
+        "format": "mp3",
         "to_lang": language,
         "auto_translate": auto_translate,
         "voice_speed": "0%",
@@ -86,11 +93,14 @@ def get_audio_url(text: str, voice_id: str):
 
     # print(response_json)
 
-    return 'https://u95167-90db-50b3537f.westx.seetacloud.com:8443/flashsummary/retrieveFileData?stream=True&token=' + token + '&voice_audio_path=' + \
+    return 'https://api.ttson.cn:50602/flashsummary/retrieveFileData?stream=True&token=' + token + '&voice_audio_path=' + \
         response_json['voice_path']
 
 
 def download_audio(url, save_path):
+    if url == "":
+        print("Empty url")
+        return False
     try:
         audio_content = requests.get(url)
         if audio_content.status_code == 200:
@@ -119,22 +129,22 @@ def generate_audio(text, character_id):
         # 提取文件名，.wav字符前的八个字符为文件名
         file_name = audio_url.split('/')[-1].split('.')[0][:8]
         # 拼接文件路径
-        save_path = os.path.join(base_path, file_name + '.wav')
+        save_path = os.path.join(base_path, file_name + '.mp3')
 
         if download_audio(audio_url, save_path):
             # 转换为silk格式
             silk_path = convert_to_silk(save_path, base_path)
 
             # 删除wav文件
-            os.remove(save_path)
+            # os.remove(save_path)
             return silk_path
     return None
 
 
 if __name__ == "__main__":
-    get_character_list()
+    # get_character_list()
 
     # 测试生成语音
-    text = "这是一个测试"
+    text = "你好"
     character = "430"
     generate_audio(text, character)

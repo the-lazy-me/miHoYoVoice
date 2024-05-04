@@ -5,6 +5,5 @@ voice_switch: False
 
 # token，这个是必须的，不然无法使用，可以配置多个token，获取方式请看文档
 token:
-  - "填入你的token"
-  - "填入你的token"
+  - "填入你的token 1"
 
