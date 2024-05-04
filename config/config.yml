@@ -1,0 +1,10 @@
+# 默认角色，可在对话中指定角色，不指定则使用默认角色
+character: "派蒙"
+# 是否默认开启语音功能，默认为False，即不开启，True为默认开启，看你喜好
+voice_switch: False
+
+# token，这个是必须的，不然无法使用，可以配置多个token，获取方式请看文档
+token:
+  - "填入你的token"
+  - "填入你的token"
+
