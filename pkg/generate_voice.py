@@ -20,7 +20,7 @@ if len(config['token']) == 0:
 else:
     token_list = config['token']
 
-print(token_list)
+# print(token_list)
 
 def get_character_list():
     global base_path
@@ -89,12 +89,20 @@ def get_audio_url(text: str, voice_id: str):
     }
 
     response = requests.request("POST", url, headers=headers, data=payload)
+    
+    if response.status_code != 200:
+        print(f"Error: {response.status_code}")
+        return None
     response_json = response.json()
 
     # print(response_json)
-
-    return 'https://api.ttson.cn:50602/flashsummary/retrieveFileData?stream=True&token=' + token + '&voice_audio_path=' + \
+    
+    result=response_json['url']+':'+str(response_json['port'])+'/flashsummary/retrieveFileData?stream=True&token=' + token + '&voice_audio_path=' + \
         response_json['voice_path']
+        
+    # print(result)
+
+    return result
 
 
 def download_audio(url, save_path):
