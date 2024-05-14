@@ -47,6 +47,7 @@ pip install -r requirements.txt -i https://pypi.tuna.tsinghua.edu.cn/simple some
 这个链接形如`https://acgn.ttson.cn/?token=一串英文数字字符`
 
 这个`token=`后面的英文数字字符就是获取到的token，复制备用
+**是等于号后面的！！！不是那一串网址！！！长眼睛看清楚！！！**
 
 ### 配置
 
