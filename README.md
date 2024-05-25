@@ -8,7 +8,7 @@
 
 ## 介绍
 
-本插件调用了[TTS-Online原神免费文本转语音](https://acgn.ttson.cn/)的接口，用于将QChatGPT返回的内容转换为原神/星铁角色语音
+本插件调用了[TTS-Online原神免费文本转语音](https://www.ttson.cn/?source=thelazy)的接口，用于将QChatGPT返回的内容转换为原神/星铁角色语音
 
 特点：速度快，低价，效果好
 
@@ -38,7 +38,7 @@ pip install -r requirements.txt -i https://pypi.tuna.tsinghua.edu.cn/simple some
 
 ### token获取
 
-打开此页面https://www.ttson.cn/
+打开此页面[https://www.ttson.cn/](https://www.ttson.cn/?source=thelazy)
 
 点击升级专业版
 
@@ -47,6 +47,8 @@ pip install -r requirements.txt -i https://pypi.tuna.tsinghua.edu.cn/simple some
 这个链接形如`https://acgn.ttson.cn/?token=一串英文数字字符`
 
 这个`token=`后面的英文数字字符就是获取到的token，复制备用
+
+**是等于号后面的！！！不是那一串网址！！！长眼睛看清楚！！！**
 
 ### 配置
 
