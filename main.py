@@ -39,7 +39,7 @@ class SwitchVoicePlugin(CommandOperator):
 
         elif context.crt_params[0] == "状态":
             if ifVoice:
-                yield entities.CommandReturn(text="语音合成状态:已开启"+f"，当前角色为{character}")
+                yield entities.CommandReturn(text="语音合成状态:已开启" + f"，当前角色为{character}")
             else:
                 yield entities.CommandReturn(text="语音合成状态:已关闭")
 
@@ -82,16 +82,16 @@ class SwitchVoicePlugin(CommandOperator):
 class VoicePlugin(BasePlugin):
     # 插件加载时触发
     def __init__(self, host: APIHost):
-        pass
-
-    # 当消息回复时触发
-    @handler(NormalMessageResponded)
-    async def text_to_voice(self, ctx: EventContext):
         # 清空同目录的audio_temp文件夹下的所有文件
         base_path = os.path.abspath(os.path.join(os.path.dirname(__file__), "audio_temp"))
         if os.path.exists(base_path):
             for file in os.listdir(base_path):
                 os.remove(os.path.join(base_path, file))
+        pass
+
+    # 当消息回复时触发
+    @handler(NormalMessageResponded)
+    async def text_to_voice(self, ctx: EventContext):
         global ifVoice
         global character
         # 如果语音开关开启
