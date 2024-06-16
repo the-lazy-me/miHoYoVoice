@@ -14,6 +14,8 @@
 
 ## 使用
 
+> 简单方法：管理员在聊天会话中，发送：`!plugin get https://github.com/the-lazy-me/miHoYoVoice.git `
+
 ### 下载
 
 克隆此项目，放到plugins的文件夹下
@@ -24,7 +26,7 @@ git clone https://github.com/the-lazy-me/miHoYoVoice.git
 
 或下载源码压缩包，解压后放到plugins的文件夹下
 
-打开GenshinVoice文件夹，命令行执行
+打开miHoYoVoice文件夹，命令行执行
 
 ```bash
 pip install -r requirements.txt
